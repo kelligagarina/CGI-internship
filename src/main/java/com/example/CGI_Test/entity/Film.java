@@ -22,4 +22,7 @@ public class Film {
     private LocalDateTime kellaeg;
     private int vanusepiirang;
     private String žanr;
+    private String keel;
+    private String formaat;
+    private String subtiitrid;
 }

@@ -25,12 +25,18 @@ public class CgiTestApplication implements CommandLineRunner {
 				.vanusepiirang(0)
 				.žanr("Lastefilm")
 				.kellaeg(LocalDateTime.of(2023,4,1,12,0))
+				.formaat("2D")
+				.keel("inglise")
+				.subtiitrid("eesti")
 				.build();
 		Film film2 = Film.builder()
 				.pealkiri("Vaesekesed")
 				.vanusepiirang(14)
-				.žanr("Komöödia")
+				.žanr("Lastefilm")
 				.kellaeg(LocalDateTime.of(2023,4,1,18,30))
+				.formaat("2D")
+				.keel("eesti")
+				.subtiitrid("eesti")
 				.build();
 
 		Film film3 = Film.builder()
@@ -38,6 +44,9 @@ public class CgiTestApplication implements CommandLineRunner {
 				.vanusepiirang(12)
 				.žanr("Märul")
 				.kellaeg(LocalDateTime.of(2023,4,1,16,0))
+				.formaat("3D")
+				.keel("inglise")
+				.subtiitrid("vene")
 				.build();
 
 		filmRepository.save(film1);
