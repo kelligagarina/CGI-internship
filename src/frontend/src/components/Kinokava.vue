@@ -1,8 +1,12 @@
 <template>
     <div class = "container">
+        <div class = "pealkiri">
+          <h1>Nädala kinokava</h1>
+          <p>01.04.2024-07.04.2024</p>
+
+        </div>
+        <div class = "kontent">
         <div class = "kinokava">
-            <h1>Nädala kinokava</h1>
-            <p>01.04.2024-07.04.2024</p>
             <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
                 <div class="film-info">
                 <h1 class = "pealkiri">{{ film.pealkiri }}</h1>
@@ -17,12 +21,12 @@
 
                 </p>
                 <button class="vali-btn">Vali film</button>
-
+            </div>
             </div>
 
-            </div>
         </div>
         <div class="filter">
+
             <h2>Filtreeri</h2>
             <form @submit.prevent="applyFilters">
                 <label for="žanr">Žanr:</label>
@@ -54,11 +58,12 @@
                     <option values="3D">3D</option>
                 </select>
                 <label for="vanus">Vanus:</label>
-                <input type="number" id="vanus" min="0">
+                <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
+                <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
 
-
-              <!--  <button type="submit">Apply</button>-->
             </form>
+            <button class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
+            </div>
         </div>
     </div>
 </template>
@@ -75,7 +80,8 @@ import FilmService from '../services/FilmService'
                 valitudŽanr: '',
                 valitudKeel:'',
                 valitudSubtiitrid:'',
-                valitudFormaat:''
+                valitudFormaat:'',
+                valitudVanus: ''
             }
         },
         methods: {
@@ -98,8 +104,9 @@ import FilmService from '../services/FilmService'
                         const žanriJärgi = !this.valitudŽanr || film.žanr === this.valitudŽanr;
                         const keeleJärgi = !this.valitudKeel || film.keel === this.valitudKeel;
                         const subtiitrideJärgi =  !this.valitudSubtiitrid || film.subtiitrid === this.valitudSubtiitrid;
-                         const formaadiJärgi = !this.valitudFormaat || film.formaat === this.valitudFormaat;
-                            return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi;
+                        const formaadiJärgi = !this.valitudFormaat || film.formaat === this.valitudFormaat;
+                        const vanuseJärgi = !this.valitudVanus || film.vanusepiirang <= this.valitudVanus || this.valitudVanus < 0;
+                            return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi;
                             });
                         }
                 }
@@ -112,12 +119,19 @@ import FilmService from '../services/FilmService'
     display: flex;
     justify-content:space;
     align-items: flex-start; /* Align items at the top */
+    flex-direction: column;
 }
-
+.pealkiri{
+    margin: auto;
+    text-align: center;
+ }
+.kontent{
+    display: flex;
+}
 .kinokava{
     margin:auto;
     padding-right: 20px;
-    width: 80%;
+    width: 100%;
 }
 
 .film {
@@ -155,7 +169,8 @@ import FilmService from '../services/FilmService'
 
 
 
-.vali-btn {
+.vali-btn,
+.soovitus-btn{
   background: purple;
   border: 0;
   border-radius: 12px;
@@ -165,19 +180,19 @@ import FilmService from '../services/FilmService'
   font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   font-size: 20px;
   font-weight: 500;
-  line-height: 2.5;
   outline: transparent;
-  padding: 0 1rem;
+  padding: 12px 24px;
   text-align: center;
   transition: box-shadow .2s ease-in-out;
 }
 
-.vali-btn:not([disabled]):hover {
+.vali-btn:not([disabled]):hover,
+.soovitus-btn:not([disabled]):hover {
   box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem plum;
 }
+
 .filter {
-    margin-top: 93px;
-    width:20%;
+    width:30%;
     float: right;
     padding: 20px;
     border: 1px solid #ccc;
@@ -203,6 +218,10 @@ select, input {
     width: 100%;
     margin-bottom: 10px;
     padding: 5px;
+}
+.soovitus-btn{
+    margin-top: 20px;
+    padding: 12px 24px;
 }
 
 

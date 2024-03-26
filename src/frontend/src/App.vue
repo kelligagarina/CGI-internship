@@ -1,16 +1,20 @@
 <template>
    <div id = "app">
     <Kinokava />
+    <SooviTused />
    </div>
 </template>
 
 <script>
+
 import Kinokava from './components/Kinokava.vue'
+import SooviTused from './components/SooviTused.vue'
 
 export default {
   name: 'App',
   components: {
-    Kinokava
+    Kinokava,
+    SooviTused
   }
 }
 </script>
