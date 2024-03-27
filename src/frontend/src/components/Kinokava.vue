@@ -20,7 +20,7 @@
                 <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
 
                 </p>
-                <button class="vali-btn">Vali film</button>
+                <button @click="toggleSaal" class="vali-btn">Vali film</button>
             </div>
             </div>
 
@@ -28,7 +28,7 @@
         <div class="filter">
 
             <h2>Filtreeri</h2>
-            <form @submit.prevent="applyFilters">
+            <form>
                 <label for="žanr">Žanr:</label>
                 <select v-model="valitudŽanr" id="žanr" >
                     <option value="">Kõik</option>
@@ -96,7 +96,11 @@ import FilmService from '../services/FilmService'
 
             toggleSoovitus() {
                  this.$emit('toggle-recommendations');
-                  }
+                  },
+            toggleSaal() {
+                 this.$emit('toggle-istekohad');
+
+            }
         },
         created() {
                      this.getFilmid().then(() => {
@@ -129,6 +133,7 @@ import FilmService from '../services/FilmService'
 .pealkiri{
     margin: auto;
     text-align: center;
+    padding: 3%
  }
 .kontent{
     display: flex;
@@ -171,8 +176,6 @@ import FilmService from '../services/FilmService'
 .info{
     padding: 10px;
 }
-
-
 
 .vali-btn,
 .soovitus-btn{

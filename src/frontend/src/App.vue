@@ -1,7 +1,8 @@
 <template>
    <div id = "app">
-    <Kinokava  v-if="!showRecommendations" @toggle-recommendations="toggleSoovitus" />
-    <SooviTused v-if="showRecommendations" />
+    <Kinokava  v-if="!showRecommendations && !showKinosaal" @toggle-recommendations="toggleSoovitus" @toggle-istekohad="toggleSaal" />
+    <SooviTused v-if="showRecommendations"  @toggle-istekohad="toggleSaal"/>
+    <IstekohtadeSoovitused v-if="showKinosaal"/>
    </div>
 </template>
 
@@ -9,23 +10,31 @@
 
 import Kinokava from './components/Kinokava.vue'
 import SooviTused from './components/SooviTused.vue'
+import IstekohtadeSoovitused from './components/IstekohtadeSoovitused.vue'
 
 export default {
   name: 'App',
   components: {
     Kinokava,
-    SooviTused
+    SooviTused,
+    IstekohtadeSoovitused
   },
    data() {
       return {
         showRecommendations: false,
-        showKinokava: true
+        showKinokava: true,
+        showKinosaal: false
       };
     },
     methods: {
       toggleSoovitus() {
         this.showRecommendations = !this.showRecommendations;
         this.showKinokava = !this.showKinokava;
+      },
+      toggleSaal() {
+          this.showKinosaal = !this.showKinosaal;
+          this.showKinokava = false;
+          this.showRecommendations = false;
       }
     }
 }

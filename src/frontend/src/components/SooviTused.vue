@@ -1,7 +1,7 @@
 <template>
   <div class = "container">
           <div class = "pealkiri">
-            <h1>Soovitused Teie vaatamisajaloo järgi</h1>
+            <h1>Soovitused vaatamisajaloo järgi:</h1>
           </div>
           <div class = "kontent">
           <div class = "soovitused">
@@ -20,7 +20,7 @@
                   <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
 
                   </p>
-                  <button class="vali-btn">Vali film</button>
+                  <button @click="toggleSaal" class="vali-btn">Vali film</button>
               </div>
               </div>
                </div>
@@ -44,6 +44,9 @@ export default {
             this.soovitatudFilmid = response.data;
              });
            },
+    toggleSaal() {
+       this.$emit('toggle-istekohad');
+            }
 
   },
   mounted() {
@@ -58,8 +61,8 @@ export default {
 }
 .soovitused{
     margin: auto;
-    padding-top: 10%;
     width: 100%;
+    padding-top: 5%;
 }
 
 
