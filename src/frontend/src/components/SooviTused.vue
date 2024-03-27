@@ -1,17 +1,35 @@
 <template>
-  <div>
-    <h2>{{ name }}</h2>
-    <ul>
-    <li v-for="(film, index) in soovitatudFilmid" :key="index">
-            {{ film }}
-          </li>
-    </ul>
+  <div class = "container">
+          <div class = "pealkiri">
+            <h1>Soovitused Teie vaatamisajaloo järgi</h1>
+          </div>
+          <div class = "kontent">
+          <div class = "soovitused">
+              <div class = "film" v-for = "film in soovitatudFilmid" v-bind:key = "film.id">
+                  <div class="film-info">
+                  <h4> Meeldib Teile tõenäosusega {{film.soovitus}}%</h4>
 
-  </div>
+                  <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
+                  <p class = "kellaeg">{{ film.kellaeg }}</p>
+
+                  <p class = "üksikasjad">
+                  <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
+                  <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
+                  <span class = "info"><b>Keel: </b>{{ film.keel }}</span>
+                  <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
+                  <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
+
+                  </p>
+                  <button class="vali-btn">Vali film</button>
+              </div>
+              </div>
+               </div>
+                  </div>
+          </div>
 </template>
 
 <script>
-import SuggestionService from '../services/SuggestionService'
+import SoovitusService from '../services/SoovitusService'
 
 export default {
   data() {
@@ -22,7 +40,7 @@ export default {
   },
   methods: {
     getSoovitused(){
-        return SuggestionService.getSoovitused().then((response) =>{
+        return SoovitusService.getSoovitused().then((response) =>{
             this.soovitatudFilmid = response.data;
              });
            },
@@ -34,3 +52,15 @@ export default {
 }
 </script>
 
+<style>
+.kontent{
+    margin: auto;
+}
+.soovitused{
+    margin: auto;
+    padding-top: 10%;
+    width: 100%;
+}
+
+
+</style>

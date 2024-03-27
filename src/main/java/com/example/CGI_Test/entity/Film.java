@@ -25,4 +25,5 @@ public class Film {
     private String keel;
     private String formaat;
     private String subtiitrid;
+    private Double soovitus;
 }

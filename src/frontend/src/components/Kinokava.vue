@@ -9,7 +9,7 @@
         <div class = "kinokava">
             <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
                 <div class="film-info">
-                <h1 class = "pealkiri">{{ film.pealkiri }}</h1>
+                <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
                 <p class = "kellaeg">{{ film.kellaeg }}</p>
 
                 <p class = "üksikasjad">
@@ -62,7 +62,7 @@
                 <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
 
             </form>
-            <button class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
+            <button @click="toggleSoovitus" class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
             </div>
         </div>
     </div>
@@ -70,6 +70,7 @@
 
 <script>
 import FilmService from '../services/FilmService'
+
     export default{
         name: 'FilmidList',
         data(){
@@ -81,7 +82,7 @@ import FilmService from '../services/FilmService'
                 valitudKeel:'',
                 valitudSubtiitrid:'',
                 valitudFormaat:'',
-                valitudVanus: ''
+                valitudVanus: '',
             }
         },
         methods: {
@@ -91,7 +92,11 @@ import FilmService from '../services/FilmService'
                 });
             },
             applyFilters(){
-            }
+            },
+
+            toggleSoovitus() {
+                 this.$emit('toggle-recommendations');
+                  }
         },
         created() {
                      this.getFilmid().then(() => {

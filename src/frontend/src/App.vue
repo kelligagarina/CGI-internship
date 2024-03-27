@@ -1,7 +1,7 @@
 <template>
    <div id = "app">
-    <Kinokava />
-    <SooviTused />
+    <Kinokava  v-if="!showRecommendations" @toggle-recommendations="toggleSoovitus" />
+    <SooviTused v-if="showRecommendations" />
    </div>
 </template>
 
@@ -15,7 +15,19 @@ export default {
   components: {
     Kinokava,
     SooviTused
-  }
+  },
+   data() {
+      return {
+        showRecommendations: false,
+        showKinokava: true
+      };
+    },
+    methods: {
+      toggleSoovitus() {
+        this.showRecommendations = !this.showRecommendations;
+        this.showKinokava = !this.showKinokava;
+      }
+    }
 }
 </script>
 

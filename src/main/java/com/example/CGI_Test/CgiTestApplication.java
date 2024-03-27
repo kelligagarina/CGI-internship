@@ -28,21 +28,6 @@ public class CgiTestApplication implements CommandLineRunner {
  	@Autowired
 	private FilmRepository filmRepository;
 
-	private List<Film> vaadatudFilmid = Arrays.asList(
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Draama", "eesti", "2D", "puuduvad"),
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad"),
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad"),
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad"),
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Draama", "eesti", "2D", "puuduvad"),
-			new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Komöödia", "eesti", "2D", "puuduvad")
-
-
-
-	);
-	@GetMapping("/soovita")
-	public List<Film> soovitaFilme() {
-		return vaadatudFilmid;
-	}
 	@Override
 	public void run(String... args) throws Exception {
 		Film film1 = Film.builder()
@@ -79,10 +64,6 @@ public class CgiTestApplication implements CommandLineRunner {
 		filmRepository.save(film3);
 
 	}
-	/**@GetMapping("/kinokava")
-	public List<Film> fetchFilmid(){
-		return filmRepository.findAll();
-	}*/
 
 
 
