@@ -1,9 +1,7 @@
 package com.example.CGI_Test.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.*;
 
 @RestController
@@ -13,9 +11,24 @@ public class KinosaalController {
 
     @GetMapping("/kinosaal")
     public int[][] looKinosaal() {
-        int[][] kinosaal  = taidaSaal(7, 14);
+        int[][] kinosaal = taidaSaal(7,14);
         return kinosaal;
     }
+ /**    @PostMapping("/istekohaSoovitus")
+    public int[][] soovitaKohad(@RequestBody int piletiteArv) {
+        int[][] kinosaal = taidaSaal(7,14);
+        int[][] result = new int[kinosaal.length][];
+        for (int i = 0; i < kinosaal.length; i++) {
+            result[i] = kinosaal[i].clone(); // Clone the inner array to avoid modifying the original array
+            for (int j = 0; j < kinosaal[i].length; j++) {
+                if (result[i][j] == 0) {
+                    result[i][j] = piletiteArv;
+                }
+            }
+        }
+        return result;
+    }*/
+
 
     private int[][] taidaSaal(int read, int kohad) {
         Random random = new Random();

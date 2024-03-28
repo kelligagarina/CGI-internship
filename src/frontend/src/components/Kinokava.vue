@@ -1,71 +1,65 @@
 <template>
-    <div class = "container">
-        <div class = "pealkiri">
-          <h1>Nädala kinokava</h1>
-          <p>01.04.2024-07.04.2024</p>
-
-        </div>
-        <div class = "kontent">
-        <div class = "kinokava">
-            <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
-                <div class="film-info">
-                <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
-                <p class = "kellaeg">{{ film.kellaeg }}</p>
-
-                <p class = "üksikasjad">
-                <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
-                <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
-                <span class = "info"><b>Keel: </b>{{ film.keel }}</span>
-                <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
-                <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
-
-                </p>
-                <button @click="toggleSaal" class="vali-btn">Vali film</button>
+  <div class = "container">
+   <div class = "pealkiri">
+      <h1>Nädala kinokava</h1>
+      <p>01.04.2024-07.04.2024</p>
+   </div>
+   <div class = "kontent">
+      <div class = "kinokava">
+         <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
+            <div class="film-info">
+               <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
+               <p class = "kellaeg">{{ film.kellaeg }}</p>
+               <p class = "üksikasjad">
+                  <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
+                  <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
+                  <span class = "info"><b>Keel: </b>{{ film.keel }}</span>
+                  <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
+                  <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
+               </p>
+               <button @click="toggleSaal" class="vali-btn">Vali film</button>
             </div>
-            </div>
-
-        </div>
-        <div class="filter">
-
-            <h2>Filtreeri</h2>
-            <form>
-                <label for="žanr">Žanr:</label>
-                <select v-model="valitudŽanr" id="žanr" >
-                    <option value="">Kõik</option>
-                    <option v-for="žanr in unikaalsedŽanrid" v-bind:key="žanr" v-bind:value="žanr">
-                        {{ žanr }}
-                    </option>
-                </select>
-                <label for="keel">Keel:</label>
-                <select v-model="valitudKeel" id="keel">
-                    <option value="">Kõik</option>
-                    <option v-for="keel in unikaalsedKeeled" v-bind:key="keel">
-                        {{ keel }}
-                    </option>
-                </select>
-                <label for="subtiitrid">Subtiitrid:</label>
-                <select v-model="valitudSubtiitrid" id="subtiitrid">
-                    <option value="">Kõik</option>
-                    <option values="inglise">inglise</option>
-                    <option values="vene">vene</option>
-                    <option values="eesti">eesti</option>
-                    <option values="puuduvad">puuduvad</option>
-                </select>
-                <label for="formaat">Formaat:</label>
-                <select v-model="valitudFormaat" id="formaat">
-                    <option value="">Kõik</option>
-                    <option values="2D">2D</option>
-                    <option values="3D">3D</option>
-                </select>
-                <label for="vanus">Vanus:</label>
-                <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
-                <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
-
-            </form>
-            <button @click="toggleSoovitus" class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
-            </div>
-        </div>
-    </div>
+         </div>
+      </div>
+      <div class="filter">
+         <h2>Filtreeri</h2>
+         <form>
+            <label for="žanr">Žanr:</label>
+            <select v-model="valitudŽanr" id="žanr" >
+               <option value="">Kõik</option>
+               <option v-for="žanr in unikaalsedŽanrid" v-bind:key="žanr" v-bind:value="žanr">
+                  {{ žanr }}
+               </option>
+            </select>
+            <label for="keel">Keel:</label>
+            <select v-model="valitudKeel" id="keel">
+               <option value="">Kõik</option>
+               <option v-for="keel in unikaalsedKeeled" v-bind:key="keel">
+                  {{ keel }}
+               </option>
+            </select>
+            <label for="subtiitrid">Subtiitrid:</label>
+            <select v-model="valitudSubtiitrid" id="subtiitrid">
+               <option value="">Kõik</option>
+               <option values="inglise">inglise</option>
+               <option values="vene">vene</option>
+               <option values="eesti">eesti</option>
+               <option values="puuduvad">puuduvad</option>
+            </select>
+            <label for="formaat">Formaat:</label>
+            <select v-model="valitudFormaat" id="formaat">
+               <option value="">Kõik</option>
+               <option values="2D">2D</option>
+               <option values="3D">3D</option>
+            </select>
+            <label for="vanus">Vanus:</label>
+            <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
+            <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
+         </form>
+         <button @click="toggleSoovitus" class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
+      </div>
+   </div>
+</div>
 </template>
 
 <script>
@@ -127,7 +121,7 @@ import FilmService from '../services/FilmService'
 .container {
     display: flex;
     justify-content:space;
-    align-items: flex-start; /* Align items at the top */
+    align-items: flex-start;
     flex-direction: column;
 }
 .pealkiri{

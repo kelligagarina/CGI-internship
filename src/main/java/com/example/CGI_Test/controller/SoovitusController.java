@@ -49,6 +49,12 @@ public class SoovitusController {
                 film.setSoovitus(zanrideOsakaalud.get(film.getŽanr()));
                 soovitatudFilmid.add(film);
         }}
+        Collections.sort(soovitatudFilmid, new Comparator<Film>() {//Sorteerimine kahanevas järjekorras.
+            @Override
+            public int compare(Film film1, Film film2) {
+                return Double.compare(film2.getSoovitus(), film1.getSoovitus());
+            }
+        });
         return soovitatudFilmid;
     }
 }
