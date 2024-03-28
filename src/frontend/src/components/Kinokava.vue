@@ -17,7 +17,7 @@
                   <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
                   <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
                </p>
-               <button @click="toggleSaal" class="vali-btn">Vali film</button>
+               <button @click="LiiguSaali" class="vali-btn">Vali film</button>
             </div>
          </div>
       </div>
@@ -56,7 +56,7 @@
             <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
             <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
          </form>
-         <button @click="toggleSoovitus" class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
+         <button @click="LiiguSoovitus" class="soovitus-btn">Soovita filme vaatamisajaloo põhjal</button>
       </div>
    </div>
 </div>
@@ -66,7 +66,7 @@
 import FilmService from '../services/FilmService'
 
     export default{
-        name: 'FilmidList',
+        name: 'KinoKava',
         data(){
             return {
                 filmid : [],
@@ -87,14 +87,12 @@ import FilmService from '../services/FilmService'
             },
             applyFilters(){
             },
-
-            toggleSoovitus() {
-                 this.$emit('toggle-recommendations');
-                  },
-            toggleSaal() {
-                 this.$emit('toggle-istekohad');
-
-            }
+          LiiguSaali(){
+            this.$router.push("/api/kinosaal");
+          },
+          LiiguSoovitus() {
+            this.$router.push("/api/soovitaFilme");
+          }
         },
         created() {
                      this.getFilmid().then(() => {

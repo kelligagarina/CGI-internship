@@ -21,7 +21,7 @@
          <h2>Mitu piletit soovid osta?</h2>
          <form>
             <label for="arv">Piletite arv:</label>
-            <input v-model="piletiteArv" type="number" id="vanus" min="0" placeholder="Sisesta piletite arv." @input="getKinosaalSoovitused(piletiteArv)">
+            <input v-model="piletiteArv" type="number" id="vanus" min="0" placeholder="Sisesta piletite arv." >
          </form>
       </div>
    </div>
@@ -37,8 +37,7 @@ export default {
     return {
 
       isteKohad: [],
-      piletiteArv : 2,
-      soovitused: []
+      piletiteArv : 0,
 
     };
   },

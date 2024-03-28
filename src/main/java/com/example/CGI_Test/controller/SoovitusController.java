@@ -30,7 +30,7 @@ public class SoovitusController {
 
 
     );
-    @GetMapping("/soovita")
+    @GetMapping("/soovitaFilme")
     public List<Film> soovitaFilme() {//Filmide soovitamise algoritm. Soovitamine toimub žanride järgi.
         List<Film> filmid = filmRepository.findAll();
         List<Film> soovitatudFilmid = new ArrayList<>();

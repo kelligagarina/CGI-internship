@@ -1,42 +1,14 @@
 <template>
    <div id = "app">
-    <Kinokava  v-if="!showRecommendations && !showKinosaal" @toggle-recommendations="toggleSoovitus" @toggle-istekohad="toggleSaal" />
-    <SooviTused v-if="showRecommendations"  @toggle-istekohad="toggleSaal"/>
-    <IstekohtadeSoovitused v-if="showKinosaal"/>
+   <nav> <router-link to="/api/kinokava"></router-link></nav>
+   <router-view />
    </div>
 </template>
 
 <script>
 
-import Kinokava from './components/Kinokava.vue'
-import SooviTused from './components/SooviTused.vue'
-import IstekohtadeSoovitused from './components/IstekohtadeSoovitused.vue'
-
 export default {
-  name: 'App',
-  components: {
-    Kinokava,
-    SooviTused,
-    IstekohtadeSoovitused
-  },
-   data() {
-      return {
-        showRecommendations: false,
-        showKinokava: true,
-        showKinosaal: false
-      };
-    },
-    methods: {
-      toggleSoovitus() {
-        this.showRecommendations = !this.showRecommendations;
-        this.showKinokava = !this.showKinokava;
-      },
-      toggleSaal() {
-          this.showKinosaal = !this.showKinosaal;
-          this.showKinokava = false;
-          this.showRecommendations = false;
-      }
-    }
+  name: 'App'
 }
 </script>
 

@@ -17,7 +17,7 @@
                   <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
                   <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
                </p>
-               <button @click="toggleSaal" class="vali-btn">Vali film</button>
+               <button @click="LiiguSaali" class="vali-btn">Vali film</button>
             </div>
          </div>
       </div>
@@ -41,8 +41,8 @@ export default {
             this.soovitatudFilmid = response.data;
              });
            },
-    toggleSaal() {
-       this.$emit('toggle-istekohad');
+    LiiguSaali() {
+      this.$router.push("/api/kinosaal");
             }
 
   },
