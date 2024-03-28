@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -18,18 +19,22 @@ public class SoovitusController {
 
     @Autowired
     private FilmRepository filmRepository;
+    private static final DecimalFormat decfor = new DecimalFormat("0.00");  
 
-    private List<Film> vaadatudFilmid = Arrays.asList(//Käsitsi sisestatud filmiajalugu.
+    private List<Film> vaadatudFilmid = Arrays.asList(//Käsitsi sisestatud filmiajalugu
+            //kuna selle soovitusalgoritmi jaoks on oluline ainult filmi žanr, ei ole andmed täielikud.
             new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Draama", "eesti", "2D", "puuduvad",0.0),
             new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad",0.0),
             new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad",0.0),
             new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Märul", "eesti", "2D", "puuduvad",0.0),
             new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Draama", "eesti", "2D", "puuduvad",0.0),
-            new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Komöödia", "eesti", "2D", "puuduvad",0.0)
-
-
+            new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Lastefilm", "eesti", "2D", "puuduvad",0.0),
+            new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Lastefilm", "eesti", "2D", "puuduvad",0.0),
+            new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Põnevik", "eesti", "2D", "puuduvad",0.0),
+            new Film(1, "Tere", LocalDateTime.of(2023,4,1,18,30), 12, "Õudus", "eesti", "2D", "puuduvad",0.0)
 
     );
+
     @GetMapping("/soovitaFilme")
     public List<Film> soovitaFilme() {//Filmide soovitamise algoritm. Soovitamine toimub žanride järgi.
         List<Film> filmid = filmRepository.findAll();
@@ -42,7 +47,8 @@ public class SoovitusController {
             zanrideOsakaalud.put(genre, zanrideOsakaalud.getOrDefault(genre, 0.0) + 1);
         }
         for (String žanr : zanrideOsakaalud.keySet())//Vahetab esinemiste arvu osakaaluga vaadatutest filmides.
-            zanrideOsakaalud.put(žanr,(zanrideOsakaalud.get(žanr) / filmideKoguarv) * 100);
+        
+            zanrideOsakaalud.put(žanr, Double.parseDouble(decfor.format((zanrideOsakaalud.get(žanr) / filmideKoguarv))) * 100);//https://www.javatpoint.com/how-to-round-double-and-float-up-to-two-decimal-places-in-java
 
         for (Film film : filmid) {
             if (zanrideOsakaalud.containsKey(film.getŽanr())){//kui nädala kavas on filme sama žanriga, mis esines vaatamisajaloos - pannakse neid listi.

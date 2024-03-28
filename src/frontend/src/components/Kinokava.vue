@@ -8,16 +8,20 @@
       <div class = "kinokava">
          <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
             <div class="film-info">
-               <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
-               <p class = "kellaeg">{{ film.kellaeg }}</p>
-               <p class = "üksikasjad">
-                  <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
-                  <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
-                  <span class = "info"><b>Keel: </b>{{ film.keel }}</span>
-                  <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
-                  <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
-               </p>
+                <div class = "film-detailid">
+                    <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
+                    <p class = "kellaeg">{{ film.kellaeg }}</p>
+                    <p class = "üksikasjad">
+                        <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
+                        <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
+                        <span class = "info"><b>Keel: </b>{{ film.keel }}</span>
+                        <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
+                        <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
+                    </p>
+                </div>
+            <div class="nupp">
                <button @click="LiiguSaali" class="vali-btn">Vali film</button>
+            </div>
             </div>
          </div>
       </div>
@@ -31,6 +35,7 @@
                   {{ žanr }}
                </option>
             </select>
+
             <label for="keel">Keel:</label>
             <select v-model="valitudKeel" id="keel">
                <option value="">Kõik</option>
@@ -38,6 +43,10 @@
                   {{ keel }}
                </option>
             </select>
+
+            <label for="time">Aeg:</label>
+            <input type="time" v-model="valitudAeg" id="time">
+
             <label for="subtiitrid">Subtiitrid:</label>
             <select v-model="valitudSubtiitrid" id="subtiitrid">
                <option value="">Kõik</option>
@@ -45,6 +54,7 @@
                <option values="vene">vene</option>
                <option values="eesti">eesti</option>
                <option values="puuduvad">puuduvad</option>
+
             </select>
             <label for="formaat">Formaat:</label>
             <select v-model="valitudFormaat" id="formaat">
@@ -52,6 +62,7 @@
                <option values="2D">2D</option>
                <option values="3D">3D</option>
             </select>
+
             <label for="vanus">Vanus:</label>
             <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
             <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
@@ -85,20 +96,20 @@ import FilmService from '../services/FilmService'
                     this.filmid = response.data;
                 });
             },
-            applyFilters(){
-            },
           LiiguSaali(){
             this.$router.push("/api/kinosaal");
           },
           LiiguSoovitus() {
             this.$router.push("/api/soovitaFilme");
-          }
+          },
         },
+     
         created() {
                      this.getFilmid().then(() => {
                          this.unikaalsedŽanrid = [...new Set(this.filmid.map(film => film.žanr))];
                          this.unikaalsedKeeled = [...new Set(this.filmid.map(film => film.keel))];
-                     });},
+                     });
+                    },
         computed: {
                 filteredFilmid() {
                     return this.filmid.filter(film => {
@@ -107,11 +118,14 @@ import FilmService from '../services/FilmService'
                         const subtiitrideJärgi =  !this.valitudSubtiitrid || film.subtiitrid === this.valitudSubtiitrid;
                         const formaadiJärgi = !this.valitudFormaat || film.formaat === this.valitudFormaat;
                         const vanuseJärgi = !this.valitudVanus || film.vanusepiirang <= this.valitudVanus || this.valitudVanus < 0;
-                            return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi;
+                        const kellaegJärgi = !this.valitudAeg || this.isFilmWithinTimeRange(film.kellaeg, this.valitudAeg);
+
+
+                            return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi && kellaegJärgi;
                             });
                         }
                 }
-        }
+            }
 
 </script>
 
@@ -127,6 +141,11 @@ import FilmService from '../services/FilmService'
     text-align: center;
     padding: 3%
  }
+
+ .kellaeg{
+    text-align: center;
+ }
+
 .kontent{
     display: flex;
 }
@@ -148,27 +167,25 @@ import FilmService from '../services/FilmService'
 }
 
 .film-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.film-detailid {
     flex-grow: 1;
-    margin-right: 20px;
-}
-.kellaeg{
-    
-    
-}
-.pealkiri {
-    margin-top: 0;
-    font-size: 15px;
 }
 
 .üksikasjad {
     margin-top: 5px;
     font-size: 20px;
-    float: left;
+    float: center;
 }
 .info{
     padding: 10px;
 }
-
+.nupp {
+    margin-left: 10px;
+}
 .vali-btn,
 .soovitus-btn{
   background: purple;

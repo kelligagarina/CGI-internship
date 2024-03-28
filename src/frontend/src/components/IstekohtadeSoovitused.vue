@@ -53,8 +53,6 @@ export default {
          //            });
     //}
 
-
-
   },
   mounted() {
       this.getKinosaal();

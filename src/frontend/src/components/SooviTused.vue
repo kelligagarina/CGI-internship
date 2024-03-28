@@ -7,6 +7,8 @@
       <div class = "soovitused">
          <div class = "film" v-for = "film in soovitatudFilmid" v-bind:key = "film.id">
             <div class="film-info">
+               <div class = "film-detailid">
+
                <h4> Meeldib Teile tõenäosusega {{film.soovitus}}%</h4>
                <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
                <p class = "kellaeg">{{ film.kellaeg }}</p>
@@ -17,6 +19,7 @@
                   <span class = "info"><b>Subtiitrid: </b>{{ film.subtiitrid }}</span>
                   <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
                </p>
+               </div>
                <button @click="LiiguSaali" class="vali-btn">Vali film</button>
             </div>
          </div>
