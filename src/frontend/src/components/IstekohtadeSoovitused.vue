@@ -54,29 +54,28 @@ export default {
       const parimRida = parseInt(this.isteKohad.length / 2);
       const poolRidu = Math.ceil(parimRida / 2);//Aitab läbida pool ridu keskelt eelisjärjekorras läbitavat
       const parimKoht = parseInt(this.isteKohad[0].length / 2); // Ümardame alla, kuna tegu on indeksiga
-      const esimeneKoht = Math.max(0, parimKoht - Math.floor(numTickets / 2)); // Et mitte minna väljaspool rida
+      const esimeneKoht = Math.max(0, parimKoht - parseInt(numTickets / 2)); // Et mitte minna väljaspool rida
       const poolKohti  = Math.ceil(parimKoht / 2);
 
       for (let i = poolRidu; i < this.soovitused.length - poolRidu; i++) {//Läbime eelkõge parimaid ridu.
          const row = this.soovitused[i]; 
          for (let j = esimeneKoht; j <= parimKoht; j++) {
-            let validSeats = true;//Aitab
+            let validSeats = true;
             for (let k = j; k < j + numTickets; k++) {// Kontroll, kas valitud istekohad on vabad
             if (row[k] === 1) {//Kui pole vaba, antud lõik ei sobi.
                validSeats = false;
                break;
             }
             }
-            if (validSeats) {//Kui oleme leidnud sobiva lõiku, tagastame selle.
-               for (let k = j; k < j + numTickets; k++) {
-                  this.soovitused[i][k] = 2; //Märkime soovitatud istekohti.
+            if (validSeats) {//Kui oleme leidnud sobiva lõiku, märkime ära istmeid arvuga 2.
+               for (let k = j; k < j + numTickets && k < row.length; k++) {
+                  this.soovitused[i][k] = 2;
                }
             return;
             }
          }
          for (let j = esimeneKoht-1; j <= parimKoht+1; j++) {//Seejärel otsitakse rea laiemas lõigus.
             let validSeats = true;
-            
             for (let k = j; k < j + numTickets; k++) {
             if (row[k] === 1) {
                validSeats = false;
@@ -84,7 +83,7 @@ export default {
             }
             }
             if (validSeats) {
-            for (let k = j; k < j + numTickets; k++) {
+            for (let k = j; k < j + numTickets && k < row.length; k++) {
                this.soovitused[i][k] = 2;
             }
             return;
@@ -96,16 +95,15 @@ export default {
                if (row[k] === 1) {
                   validSeats = false;
                   break;
-               }
+            }
             }
             if (validSeats) {
-            for (let k = j; k < j + numTickets; k++) {
+            for (let k = j; k < j + numTickets && k < row.length; k++) {
                this.soovitused[i][k] = 2;
             }
             return;
             }
          }
-         
       }
       for (let i = 0; i < this.soovitused.length; i++) {//Kui siiamaani pole midagi leitud, otsime sobivaid kohti tervest saalist.
          const row = this.soovitused[i];
@@ -118,7 +116,7 @@ export default {
                }
             }
             if (validSeats) {
-               for (let k = j; k < j + numTickets; k++) {
+               for (let k = j; k < j + numTickets && k < row.length; k++) {
                   this.soovitused[i][k] = 2;
                }
             return;
@@ -156,7 +154,7 @@ input {
      padding: 20px;
      border: 1px solid #ccc;
      border-radius: 20px;
-             box-shadow:10px 10px 2px lightblue;
+     box-shadow:10px 10px 2px lightblue;
  }
 
 .vali-btn{

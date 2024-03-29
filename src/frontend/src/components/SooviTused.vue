@@ -9,8 +9,9 @@
             <div class="film-info">
                <div class = "film-detailid">
                <h4> Meeldib Teile tõenäosusega {{film.soovitus}}%</h4>
+               <h3 class = "kellaeg">{{ paremKellaeg(film.kellaeg) }}</h3>
                <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
-               <p class = "kellaeg">{{ film.kellaeg }}</p>
+               <p class = "kellaeg">{{ paremKuupäev(film.kellaeg) }}</p>
                <p class = "üksikasjad">
                   <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
                   <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
@@ -42,10 +43,18 @@ export default {
         return SoovitusService.getSoovitused().then((response) =>{
             this.soovitatudFilmid = response.data;
              });
-           },
+      },
     LiiguSaali() {
       this.$router.push("/api/kinosaal");
-            }
+      },
+    paremKellaeg(kellaeg){
+                return kellaeg.split("T")[1].substring(0,5);
+      },
+    paremKuupäev(kellaeg){
+                const aastaOsad = kellaeg.split("T")[0].split("-");
+                return aastaOsad[2] + "." + aastaOsad[1] + "." + aastaOsad[0];
+      },
+        
 
   },
   mounted() {

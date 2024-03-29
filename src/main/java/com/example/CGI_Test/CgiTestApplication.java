@@ -25,7 +25,7 @@ public class CgiTestApplication implements CommandLineRunner {
  	@Autowired
 	private FilmRepository filmRepository;
 
-	@Override
+	@Override//Filme lisatatakse andmebaasi.
 	public void run(String... args) throws Exception {
 		Film film1 = Film.builder()
 				.pealkiri("Shrek")

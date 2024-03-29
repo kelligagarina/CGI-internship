@@ -11,7 +11,7 @@ public class KinosaalController {
 
     @GetMapping("/kinosaal")
     public int[][] looKinosaal() {
-        int[][] kinosaal = taidaSaal(7,14);
+        int[][] kinosaal = taidaSaal(7,14);//loob uue saali iga lehekülje laadimisega.
         return kinosaal;
     }
  /**    @PostMapping("/istekohaSoovitus")
@@ -22,12 +22,12 @@ public class KinosaalController {
     }*/
 
 
-    private int[][] taidaSaal(int read, int kohad) {
+    private int[][] taidaSaal(int read, int kohad) {//Täidab isekohad suvaliselt kas 0 või 1-ga. 0-vaba, 1-kinni.
         Random random = new Random();
         int[][] saal = new int[read][kohad];
         for (int i = 0; i < read; i++) {
             for (int j = 0; j < kohad; j++) {
-                saal[i][j] = random.nextInt(2); //Täidab isekohad suvaliselt kas 0 või 1-ga. 0-vaba, 1-kinni.
+                saal[i][j] = random.nextInt(2); 
             }
         }
         return saal;

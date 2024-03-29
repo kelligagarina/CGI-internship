@@ -9,8 +9,9 @@
          <div class = "film" v-for = "film in filteredFilmid" v-bind:key = "film.id">
             <div class="film-info">
                 <div class = "film-detailid">
+                    <h3 class = "kellaeg">{{ paremKellaeg(film.kellaeg) }}</h3>
                     <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
-                    <p class = "kellaeg">{{ film.kellaeg }}</p>
+                    <p class = "kellaeg">{{ paremKuupäev(film.kellaeg) }}</p>
                     <p class = "üksikasjad">
                         <span class = "info"><b>Žanr: </b>{{ film.žanr }}</span>
                         <span class = "info"><b>Formaat: </b>{{ film.formaat }}</span>
@@ -19,9 +20,9 @@
                         <span class = "info"><b>Vanusepiirang: </b>{{ film.vanusepiirang }}+</span>
                     </p>
                 </div>
-            <div class="nupp">
-               <button @click="LiiguSaali" class="vali-btn">Vali film</button>
-            </div>
+                <div class="nupp">
+                <button @click="LiiguSaali" class="vali-btn">Vali film</button>
+                </div>
             </div>
          </div>
       </div>
@@ -85,20 +86,29 @@ import FilmService from '../services/FilmService'
                 valitudSubtiitrid:'',
                 valitudFormaat:'',
                 valitudVanus: '',
+                kellaeg: '',
             }
         },
         methods: {
-            getFilmid(){
+         getFilmid(){
                 return FilmService.getFilmid().then((response) =>{
                     this.filmid = response.data;
                 });
-            },
+          }, 
           LiiguSaali(){
             this.$router.push("/api/kinosaal");
           },
           LiiguSoovitus() {
             this.$router.push("/api/soovitaFilme");
           },
+          paremKellaeg(kellaeg){
+                return kellaeg.split("T")[1].substring(0,5);
+          },
+          paremKuupäev(kellaeg){
+                const aastaOsad = kellaeg.split("T")[0].split("-");
+                return aastaOsad[2] + "." + aastaOsad[1] + "." + aastaOsad[0];
+          },
+        
         },
      
         created() {//Kasutasin siin ChatGPT abi unikaalsete žanride ja keelte otsimiseks.
@@ -118,6 +128,7 @@ import FilmService from '../services/FilmService'
                         return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi;
                         });
                     }
+            
                 }
             }
 
@@ -136,24 +147,22 @@ import FilmService from '../services/FilmService'
     padding: 3%
  }
 
- .kellaeg{
+.kellaeg{
     text-align: center;
-    justify-content: space-between;
- }
+    float: left;
+}
 
 .kontent{
     display:flex;
+    margin: auto;
     
 }
 .kinokava{
-    margin:auto;
-    padding-right: 20px;
-    margin-left: auto;
+    margin-right: 5%;
+    width: 100%;
 }
 
 .film {
-    display: flex;
-    flex-direction: column;
     border: 1px solid #ccc;
     padding: 10px;
     margin-bottom: 20px;
@@ -173,14 +182,14 @@ import FilmService from '../services/FilmService'
 
 .üksikasjad {
     margin-top: 5px;
-    font-size: 20px;
+    font-size: 18px;
     float: center;
 }
 .info{
     padding: 10px;
 }
 .nupp {
-    margin-left: 10px;
+    margin-left: 2%;
 }
 .vali-btn,
 .soovitus-btn{
@@ -208,9 +217,12 @@ import FilmService from '../services/FilmService'
     width:30%;
     margin-left: auto;
     padding: 20px;
-   
     flex-wrap: wrap;
     box-sizing: border-box;
+    height: 20%;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    box-shadow:10px 10px 2px lightblue;
 
 }
 
