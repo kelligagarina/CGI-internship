@@ -44,9 +44,6 @@
                </option>
             </select>
 
-            <label for="time">Aeg:</label>
-            <input type="time" v-model="valitudAeg" id="time">
-
             <label for="subtiitrid">Subtiitrid:</label>
             <select v-model="valitudSubtiitrid" id="subtiitrid">
                <option value="">Kõik</option>
@@ -63,7 +60,7 @@
                <option values="3D">3D</option>
             </select>
 
-            <label for="vanus">Vanus:</label>
+            <label for="vanus">Vaataja vanus:</label>
             <input v-model="valitudVanus" type="number" id="vanus" min="0" placeholder="Sisesta vanus.">
             <div v-if="valitudVanus < 0" style="color: grey;">Palun sisestage positiivne arv.</div>
          </form>
@@ -81,8 +78,8 @@ import FilmService from '../services/FilmService'
         data(){
             return {
                 filmid : [],
-                unikaalsedŽanrid : [],
-                unikaalsedKeeled : [],
+                unikaalsedŽanrid : [],//Otsustasin jätta ainult need žanrid, mis päriselt kinokavas olemas on, kuna žanre võib päriselus olla liiga palju, et neid kõike kajastada.
+                unikaalsedKeeled : [],//Sama otsuse tegin ka keelte puhul
                 valitudŽanr: '',
                 valitudKeel:'',
                 valitudSubtiitrid:'',
@@ -104,26 +101,23 @@ import FilmService from '../services/FilmService'
           },
         },
      
-        created() {
-                     this.getFilmid().then(() => {
-                         this.unikaalsedŽanrid = [...new Set(this.filmid.map(film => film.žanr))];
-                         this.unikaalsedKeeled = [...new Set(this.filmid.map(film => film.keel))];
-                     });
-                    },
+        created() {//Kasutasin siin ChatGPT abi unikaalsete žanride ja keelte otsimiseks.
+            this.getFilmid().then(() => {
+            this.unikaalsedŽanrid = [...new Set(this.filmid.map(film => film.žanr))];
+            this.unikaalsedKeeled = [...new Set(this.filmid.map(film => film.keel))];
+                });
+             },
         computed: {
-                filteredFilmid() {
-                    return this.filmid.filter(film => {
-                        const žanriJärgi = !this.valitudŽanr || film.žanr === this.valitudŽanr;
-                        const keeleJärgi = !this.valitudKeel || film.keel === this.valitudKeel;
-                        const subtiitrideJärgi =  !this.valitudSubtiitrid || film.subtiitrid === this.valitudSubtiitrid;
-                        const formaadiJärgi = !this.valitudFormaat || film.formaat === this.valitudFormaat;
-                        const vanuseJärgi = !this.valitudVanus || film.vanusepiirang <= this.valitudVanus || this.valitudVanus < 0;
-                        const kellaegJärgi = !this.valitudAeg || this.isFilmWithinTimeRange(film.kellaeg, this.valitudAeg);
-
-
-                            return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi && kellaegJärgi;
-                            });
-                        }
+            filteredFilmid() {//Antud meetod filtreerib filme.
+                return this.filmid.filter(film => {
+                    const žanriJärgi = !this.valitudŽanr || film.žanr === this.valitudŽanr;//Näitab filmi faid siis, kui selle väli on sama, mis filtris või filtri väli on 'default' seisundis.
+                    const keeleJärgi = !this.valitudKeel || film.keel === this.valitudKeel;
+                    const subtiitrideJärgi =  !this.valitudSubtiitrid || film.subtiitrid === this.valitudSubtiitrid;
+                    const formaadiJärgi = !this.valitudFormaat || film.formaat === this.valitudFormaat;
+                    const vanuseJärgi = !this.valitudVanus || film.vanusepiirang <= this.valitudVanus || this.valitudVanus < 0;
+                        return žanriJärgi && keeleJärgi && subtiitrideJärgi && formaadiJärgi && vanuseJärgi;
+                        });
+                    }
                 }
             }
 
@@ -144,15 +138,17 @@ import FilmService from '../services/FilmService'
 
  .kellaeg{
     text-align: center;
+    justify-content: space-between;
  }
 
 .kontent{
-    display: flex;
+    display:flex;
+    
 }
 .kinokava{
     margin:auto;
     padding-right: 20px;
-    width: 100%;
+    margin-left: auto;
 }
 
 .film {
@@ -210,11 +206,11 @@ import FilmService from '../services/FilmService'
 
 .filter {
     width:30%;
-    float: right;
+    margin-left: auto;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    box-shadow:10px 10px 2px lightblue;
+   
+    flex-wrap: wrap;
+    box-sizing: border-box;
 
 }
 
@@ -224,6 +220,7 @@ import FilmService from '../services/FilmService'
 
 form {
     margin-top: 10px;
+   
 }
 
 label {

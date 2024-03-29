@@ -18,14 +18,6 @@ public class KinosaalController {
     public int[][] soovitaKohad(@RequestBody int piletiteArv) {
         int[][] kinosaal = taidaSaal(7,14);
         int[][] result = new int[kinosaal.length][];
-        for (int i = 0; i < kinosaal.length; i++) {
-            result[i] = kinosaal[i].clone(); // Clone the inner array to avoid modifying the original array
-            for (int j = 0; j < kinosaal[i].length; j++) {
-                if (result[i][j] == 0) {
-                    result[i][j] = piletiteArv;
-                }
-            }
-        }
         return result;
     }*/
 

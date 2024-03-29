@@ -8,7 +8,6 @@
          <div class = "film" v-for = "film in soovitatudFilmid" v-bind:key = "film.id">
             <div class="film-info">
                <div class = "film-detailid">
-
                <h4> Meeldib Teile tõenäosusega {{film.soovitus}}%</h4>
                <h3 class = "filmiPealkiri">{{ film.pealkiri }}</h3>
                <p class = "kellaeg">{{ film.kellaeg }}</p>

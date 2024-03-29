@@ -2,13 +2,16 @@
    <div id = "app">
    <nav> <router-link to="/api/kinokava"></router-link></nav>
    <router-view />
+  
    </div>
 </template>
 
 <script>
 
 export default {
-  name: 'App'
+  created(){
+      this.$router.push('/api/kinokava');
+    }
 }
 </script>
 

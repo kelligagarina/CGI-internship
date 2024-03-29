@@ -39,7 +39,7 @@ public class CgiTestApplication implements CommandLineRunner {
 		Film film2 = Film.builder()
 				.pealkiri("Vaesekesed")
 				.vanusepiirang(14)
-				.žanr("Lastefilm")
+				.žanr("Komöödia")
 				.kellaeg(LocalDateTime.of(2023,4,1,18,30))
 				.formaat("2D")
 				.keel("eesti")
@@ -56,9 +56,71 @@ public class CgiTestApplication implements CommandLineRunner {
 				.subtiitrid("vene")
 				.build();
 
+		Film film4 = Film.builder()
+				.pealkiri("Kung Fu Panda 4")
+				.vanusepiirang(0)
+				.žanr("Lastefilm")
+				.kellaeg(LocalDateTime.of(2023,4,2,15,30))
+				.formaat("2D")
+				.keel("vene")
+				.subtiitrid("puuduvad")
+				.build();
+
+		Film film5 = Film.builder()
+				.pealkiri("Elu ja armastus")
+				.vanusepiirang(12)
+				.žanr("Draama")
+				.kellaeg(LocalDateTime.of(2023,4,3,18,40))
+				.formaat("2D")
+				.keel("eesti")
+				.subtiitrid("inglise")
+				.build();
+		Film film6 = Film.builder()
+				.pealkiri("Düüm: teine osa")
+				.vanusepiirang(12)
+				.žanr("Ulmefilm")
+				.kellaeg(LocalDateTime.of(2023,4,4,20,40))
+				.formaat("2D")
+				.keel("mitmekeelne")
+				.subtiitrid("eesti")
+				.build();
+
+		Film film7 = Film.builder()
+				.pealkiri("Patust puhas")
+				.vanusepiirang(16)
+				.žanr("Õudus")
+				.kellaeg(LocalDateTime.of(2023,4,5,21,40))
+				.formaat("2D")
+				.keel("inglise")
+				.subtiitrid("vene")
+				.build();
+		Film film8 = Film.builder()
+				.pealkiri("Kottpea")
+				.vanusepiirang(12)
+				.žanr("Õudus")
+				.kellaeg(LocalDateTime.of(2023,4,6,22,10))
+				.formaat("2D")
+				.keel("inglise")
+				.subtiitrid("vene")
+				.build();
+		Film film9 = Film.builder()
+				.pealkiri("Koer Arthur")
+				.vanusepiirang(12)
+				.žanr("Seiklus")
+				.kellaeg(LocalDateTime.of(2023,4,7,16,50))
+				.formaat("2D")
+				.keel("inglise")
+				.subtiitrid("eesti")
+				.build();
 		filmRepository.save(film1);
 		filmRepository.save(film2);
 		filmRepository.save(film3);
+		filmRepository.save(film4);
+		filmRepository.save(film5);
+		filmRepository.save(film6);
+		filmRepository.save(film7);
+		filmRepository.save(film8);
+		filmRepository.save(film9);
 
 	}
 
